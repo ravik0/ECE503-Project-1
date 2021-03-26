@@ -6,16 +6,16 @@
 %sample, and a 1 represents a zero crossing at that sample.
 function[emg_zc] = hyst_zc(emg, samples)
     currentState = 0; %Current state of the state machine
-    %There are three states: 0, 1, 2, 3.
+    %There are four states: 0, 1, 2, 3.
     count = 1; %Counter to check whether we hit the sample threshold.
     foundSample = 1; %Index of sample suspected to be a crossing
     
     emg_zc = false(1,length(emg)); %Preallocated array
     
-    if (emg(1) > 0) 
+    if (emg(1) >= 0) 
         currentState = 0; 
         %If the first value is positive, we start in state 0.
-    elseif (emg(1) < 0) 
+    else 
         currentState = 2;
         %If the first value is negative, we start in state 2.
     end

@@ -1,9 +1,9 @@
 clear all;
-%Here, we test hysteresis zero crossing accuracy.
-load('zctruth.mat');
+%Here, we test hysteresis slope sign changing accuracy.
+load('ssctruth.mat'); %Load the slope sign change truths
 Test = struct('time', [], 'unit', []);
 
-samples = [1 2 3 4 5 6 7 8];
+samples = [2 3 4 5 6];
 noise = [0.2 0.4 0.6 0.8 1];
 %Get a list of the sample thresholds and noise values we're going to test.
 
@@ -13,12 +13,12 @@ for i = 1:length(samples)
     for j = 1:length(noise)
         [emg] = emg_sim(noise(j), 40);
         %Simulate EMG with noise from array, same time as truth.
-        zc = hyst_zc(emg, samples(i));
-        %Find zero crossings using hysteresis and using the sample
+        ssc = hyst_ssc(emg, samples(i));
+        %Find slope changes using hysteresis and using the sample
         %thresholds from the array.
-        ff = find(zc==1); 
-        %Find all samples where there is a zero crossing and make an array.
-        ff = ff./4096; %Get the timestamps of zero crossing.
+        ff = find(ssc==1); 
+        %Find all samples where there is a slope change and make an array.
+        ff = ff./4096; %Get the timestamps of slope change.
 
         Test.time = ff;
         Test.unit = ones(1, length(ff)); %Create test unit.
@@ -34,6 +34,6 @@ figure;
 hold on
 plot(samples, results, '-o');
 xlabel('Samples'), ylabel('Accuracy');
-title('Accuracy vs Samples and Noise for Hysteresis Zero Crossing');
+title('Accuracy vs Samples and Noise for Hysteresis Slope Sign Changes');
 legend(...
     {'Noise: 20%', 'Noise: 40%','Noise: 60%', 'Noise: 80%','Noise: 100%'});
