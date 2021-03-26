@@ -9,14 +9,13 @@ zc = hudgins_zc(emg, 0);
 ff = find(zc==1); 
 %Find all samples where there is a zero crossing and make an array of them
 ff = ff./4096;
-%Convert the samples into timestamps.
+%Convert the s
 
-Truth.time = ff; %Set the time portion with the timestamps.
-Truth.unit = ones(1, length(ff)); %Unit is all 1
+Truth.time = ff;
+Truth.unit = ones(1, length(ff));
 
-save 'zctruth.mat' Truth %Save Truth as zctruth
+save 'zctruth.mat' Truth
 
-%Repeat the same as above, but with hudgin's slope sign changes.
 ssc = hudgins_ssc(emg, 0);
 ff = find(ssc==1);
 ff = ff./4096;
