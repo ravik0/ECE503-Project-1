@@ -1,5 +1,5 @@
 %This functions uses the Hysteresis Zero Crossing algorithm to determine
-%the amount of zero-crossings in a signal.
+%the amount of zero-crossings in a signal. This uses time-based hysteresis.
 %The first input is an EMG signal, and the second is the number of samples
 %before the sample is considered a zero-crossing sample.
 %The output is a logical array where a 0 represents no crossing at that
