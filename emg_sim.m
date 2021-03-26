@@ -1,6 +1,9 @@
-function[emg, emgnonoise, noise] = emg_sim(noiselevel)
+function[emg, emgnonoise, noise] = emg_sim(noiselevel, time)
+    fc = 150;
+    fs = 4096;
+    samples = fs*time;
     RandStream.setGlobalStream(RandStream('mt19937ar', 'Seed', 54));
-    x = randn(1,10100); % Pad by 100 for start-up transient.
+    x = randn(1,samples+100); % Pad by 100 for start-up transient.
     fc = 150;
     fs = 4096;
     [b, a] = butter(2,fc/(fs/2));
@@ -9,7 +12,7 @@ function[emg, emgnonoise, noise] = emg_sim(noiselevel)
     
     emgnonoise = EMGin;
     
-    noise = noiselevel*randn(1,10000); 
+    noise = noiselevel*randn(1,samples); 
      
     emg = noise + EMGin;
 end

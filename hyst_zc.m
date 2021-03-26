@@ -22,7 +22,7 @@ function[emg_zc] = hyst_zc(emg, samples)
                 count = count + 1;
                 if (emg(i) >= 0)
                     currentState = 0;
-                elseif(emg(i) < 0 && count == samples)
+                elseif(emg(i) < 0 && count >= samples)
                     currentState = 2;
                     emg_zc(foundSample) = 1;
                 end
@@ -36,7 +36,7 @@ function[emg_zc] = hyst_zc(emg, samples)
                 count = count + 1;
                 if (emg(i) < 0)
                     currentState = 2;
-                elseif(emg(i) >= 0 && count == samples)
+                elseif(emg(i) >= 0 && count >= samples)
                     currentState = 0;
                     emg_zc(foundSample) = 1;
                 end

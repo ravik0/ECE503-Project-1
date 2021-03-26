@@ -1,3 +1,0 @@
-function[emg_zc] = hyst_zc(emg, thresh)
-    N
-end
