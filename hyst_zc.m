@@ -39,17 +39,16 @@ function[emg_zc] = hyst_zc(emg, samples)
                 %number, we need to make sure we're negative for a certain
                 %number of samples (denoted by 2nd input) before we truly
                 %say we've crossed over.
-                count = count + 1;
-                %We count first because the first ZC already counted as 1.
-                if (emg(i) >= 0)
-                    currentState = 0;
-                    %If we go back above zero, it's not a sample.
-                elseif(emg(i) < 0 && count >= samples)
+                if(count >= samples)
                     currentState = 2;
                     emg_zc(foundSample) = 1;
                     %If we are negative long enough, we go into state 2 and
                     %mark the crossed sample as a zero crossing.
+                elseif (emg(i) >= 0)
+                    currentState = 0;
+                    %If we go back above zero, it's not a sample.
                 end
+               count = count + 1;
             case 2
                 %State 2 is the negative state - if we have a negative
                 %number and we aren't checking for a zero crossing, we're
@@ -67,17 +66,16 @@ function[emg_zc] = hyst_zc(emg, samples)
                 %number, we need to make sure we're positive for a certain
                 %number of samples (denoted by 2nd input) before we truly
                 %say we've crossed over.
-                count = count + 1;
-                %We count first because the first ZC already counted as 1.
-                if (emg(i) < 0)
-                    currentState = 2;
-                    %If we go back below zero, it's not a sample.
-                elseif(emg(i) >= 0 && count >= samples)
+                if(count >= samples)
                     currentState = 0;
                     emg_zc(foundSample) = 1;
                     %If we are positive long enough, we go into state 0
                     %and mark the crossed sample as a zero crossing.
+                elseif (emg(i) < 0)
+                    currentState = 2;
+                    %If we go back below zero, it's not a sample.
                 end
+                count = count + 1;
         end 
     end
 end
